@@ -226,5 +226,5 @@ def main():  # Main function to run the assistant bot
         else:
             print("Invalid command.")
 
-if __name__ == "__main__":  # Run the main function if this script is executed
+if __name__ == "__main__":  # Run the main function 
     main()
