@@ -29,7 +29,7 @@ class Phone(Field):  # Class for storing phone numbers
         return bool(re.match(r"^\d{10}$", value))
 
 
-class Birthday(Field):  # Class for storing birthday
+class Birthday(Field):  #NEW Class for storing birthday
     def __init__(self, value):
         try:
             # Try to convert the string to a datetime object
@@ -45,11 +45,11 @@ class Record:  # Class for storing a contact record
     def __init__(self, name):
         self.name = Name(name)
         self.phones = []
-        self.birthday = None  # Optional birthday field
+        self.birthday = None  # NEW Optional birthday field
 
     def __str__(self):  # String representation of the record
         phones = '; '.join(p.value for p in self.phones)
-        birthday = f", birthday: {self.birthday}" if self.birthday else ""
+        birthday = f", birthday: {self.birthday}" if self.birthday else ""  #Adited
         return f"Contact name: {self.name.value}, phones: {phones}{birthday}"
 
     def add_phone(self, phone_number):  # Add a new phone number
@@ -80,7 +80,7 @@ class Record:  # Class for storing a contact record
     def find_phone(self, phone_number):  # Find a phone number in the record
         return next((p for p in self.phones if p.value == phone_number), None)
 
-    def add_birthday(self, birthday):  # Add birthday to the contact
+    def add_birthday(self, birthday):  # new Add birthday to a contact
         if self.birthday:
             raise ValueError("Birthday already exists.")
         self.birthday = Birthday(birthday)
@@ -103,7 +103,7 @@ class AddressBook(UserDict):  # Class for managing the address book
         del self.data[name]
         return f"Contact {name} deleted."
 
-    def get_upcoming_birthdays(self):
+    def get_upcoming_birthdays(self):     # new function to check upcoming birthdays
         today = datetime.now()
         upcoming_birthdays = []
         for record in self.values():
@@ -145,7 +145,7 @@ def add_contact(args, book):  # Add a new contact to the address book
     return f"Contact {name} added."
 
 @input_error
-def add_birthday_contact(args, book):  # Add birthday to a contact
+def add_birthday_contact(args, book):  # new Add birthday to a contact
     if len(args) != 2:
         return "Provide a name and a birthday (DD.MM.YYYY)."
     name, birthday = args
@@ -236,7 +236,7 @@ def main():  # Main function to run the assistant bot
             print("How can I help you?")
         elif command == "add":
             print(add_contact(args, book))
-        elif command == "add_birthday":
+        elif command == "add_birthday":  # new command to add birthday
             print(add_birthday_contact(args, book))
         elif command == "change":
             print(change_contact(args, book))
@@ -250,7 +250,7 @@ def main():  # Main function to run the assistant bot
             print(remove_phone(args, book))
         elif command == "find_phone":
             print(find_phone(args, book))
-        elif command == "upcoming_birthdays":
+        elif command == "upcoming_birthdays":  #new command to show upcoming birthdays
             print(book.get_upcoming_birthdays())
         else:
             print("Invalid command.")
